@@ -1,37 +1,28 @@
 package ru.otus.TestClass;
 
-import java.lang.annotation.*;
+import ru.otus.Before;
+import ru.otus.Test;
+import ru.otus.After;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-@interface After{}
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-@interface Before{}
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-@interface Test{}
-public class MyTest{
-    private static int MySize;
 
-    public MyTest() {
-    }
-
+public class MyTest {
     @Override
     public String toString() {
         return "MyTest{}";
     }
 
     @After
-    public void MyMethod1(){
+    public void MyMethod1() {
         System.out.println("do MyMethod1");
     }
+
     @Before
-    public void MyMethod2(){
+    public void MyMethod2() {
         System.out.println("do MyMethod2");
     }
+
     @Test
-    public void MyMethod3(){
+    public void MyMethod3() {
         System.out.println("do MyMethod3");
     }
 }
