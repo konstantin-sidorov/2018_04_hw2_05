@@ -8,7 +8,8 @@ public class Main {
         }
         String type = args[0];
         String name = args[1];
-        TestEngine.TestObject(type, name);
+        TestEngine testObj  =   new TestEngine(type,name);
+        testObj.test();
 
 
     }

@@ -16,15 +16,20 @@ import java.util.List;
 import java.util.Set;
 
 public class TestEngine {
-    private static List<Method> beforeMethods = new ArrayList<Method>();
-    private static List<Method> afterMethods = new ArrayList<Method>();
-    private static List<Method> testMethods = new ArrayList<Method>();
+    private List<Method> beforeMethods;
+    private List<Method> afterMethods;
+    private List<Method> testMethods;
+    private String type;
+    private String name;
 
-    private static void SetMethod(Class clazz) {
-        Method[] MyMethods = clazz.getDeclaredMethods();
-        for (Method m : MyMethods) {
-            Annotation[] MyAnnotations = m.getAnnotations();
-            for (Annotation a : MyAnnotations) {
+    private void setMethod(Class clazz) {
+        this.beforeMethods = new ArrayList<Method>();
+        this.afterMethods = new ArrayList<Method>();
+        this.testMethods = new ArrayList<Method>();
+        Method[] myMethods = clazz.getDeclaredMethods();
+        for (Method m : myMethods) {
+            Annotation[] myAnnotations = m.getAnnotations();
+            for (Annotation a : myAnnotations) {
 
                 if (a.annotationType().equals(Before.class)) {
                     beforeMethods.add(m);
@@ -39,7 +44,7 @@ public class TestEngine {
         }
     }
 
-    private static void ExecuteMethod(Class clazz) throws Exception {
+    private void executeMethod(Class clazz) throws Exception {
         Object obj = clazz.newInstance();
         for (Method m : beforeMethods) {
             m.invoke(obj);
@@ -52,11 +57,11 @@ public class TestEngine {
         }
     }
 
-    public static void TestObject(String type, String name) throws Exception {
+    public void test() throws Exception {
         if ("Class".equals(type) && !name.isEmpty()) {
             Class<?> clazz = Class.forName(name);
-            SetMethod(clazz);
-            ExecuteMethod(clazz);
+            setMethod(clazz);
+            executeMethod(clazz);
         } else if ("Package".equals(type) && !name.isEmpty()) {
             List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
             classLoadersList.add(ClasspathHelper.contextClassLoader());
@@ -70,9 +75,14 @@ public class TestEngine {
             Set<Class<? extends Object>> allClasses = reflections.getSubTypesOf(Object.class);
 
             for (Class<?> clazz : allClasses) {
-                SetMethod(clazz);
-                ExecuteMethod(clazz);
+                setMethod(clazz);
+                executeMethod(clazz);
             }
         }
+    }
+
+    public TestEngine(String type, String name) {
+        this.type = type;
+        this.name = name;
     }
 }

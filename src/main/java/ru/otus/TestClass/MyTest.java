@@ -12,17 +12,17 @@ public class MyTest {
     }
 
     @After
-    public void MyMethod1() {
-        System.out.println("do MyMethod1");
+    public void myMethod1() {
+        System.out.println("do myMethod1");
     }
 
     @Before
-    public void MyMethod2() {
-        System.out.println("do MyMethod2");
+    public void myMethod2() {
+        System.out.println("do myMethod2");
     }
 
     @Test
-    public void MyMethod3() {
-        System.out.println("do MyMethod3");
+    public void myMethod3() {
+        System.out.println("do myMethod3");
     }
 }
