@@ -45,15 +45,15 @@ public class TestEngine {
     }
 
     private void executeMethod(Class clazz) throws Exception {
-        Object obj = clazz.newInstance();
-        for (Method m : beforeMethods) {
-            m.invoke(obj);
-        }
-        for (Method m : testMethods) {
-            m.invoke(obj);
-        }
-        for (Method m : afterMethods) {
-            m.invoke(obj);
+        for (Method mTest : testMethods) {
+            Object obj = clazz.newInstance();
+            for (Method mBefore : beforeMethods) {
+                mBefore.invoke(obj);
+            }
+            mTest.invoke(obj);
+            for (Method mAfter : afterMethods) {
+                mAfter.invoke(obj);
+            }
         }
     }
 
